@@ -64,6 +64,14 @@ def add_publications(generator):
     # format entries
     plain_style = plain.Style()
     html_backend = html.Backend()
+
+    #hack added by Kyle Cranmer to avoid problems in bib with no journal entry
+    for entry in bibdata_all.entries.values():
+        if 'journal' not in entry.fields: 
+            entry.fields['journal']=''
+        if 'booktitle' not in entry.fields: 
+            entry.fields['booktitle']=''
+
     formatted_entries = plain_style.format_entries(bibdata_all.entries.values())
 
     for formatted_entry in formatted_entries:
